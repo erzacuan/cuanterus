@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harga Kripto Real-Time</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+        h1 {
+            color: #333;
+        }
+        #cryptoData {
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <h1>Harga Kripto Real-Time</h1>
+    <div id="cryptoData">Memuat data...</div>
+
+    <script>
+        // Fungsi untuk mengambil data harga kripto dari CoinGecko API
+        async function fetchCryptoData() {
+            try {
+                const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=usd');
+                const data = await response.json();
+                const bitcoinPrice = data.bitcoin.usd;
+                const ethereumPrice = data.ethereum.usd;
+                document.getElementById('cryptoData').innerHTML = `
+                    <p>Bitcoin: $${bitcoinPrice}</p>
+                    <p>Ethereum: $${ethereumPrice}</p>
+                `;
+            } catch (error) {
+                document.getElementById('cryptoData').innerHTML = 'Gagal memuat data.';
+            }
+        }
+
+        // Panggil fungsi saat halaman dimuat
+        fetchCryptoData();
+    </script>
+</body>
+</html>
